@@ -48,13 +48,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://vtuapi.internyet.in/api/v1/student/internship-apply",
+        "url": "=",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "Cookie",
-              "value": "twk_uuid_689c7188a7ee3319309bdeae=%7B%22uuid%22%3A%221.SwydW5FneS9nWY5n3yFeQpvipubJ19Wc5OdMEP8ySkrFq5EQNw2zvk5uipGCwaOMvB8eCj0WoZzI3HbmqJN5TUwzBZml3prwE9hnmjPXDa2ukYd5coEsM%22%2C%22version%22%3A3%2C%22domain%22%3A%22internyet.in%22%2C%22ts%22%3A1794757946746%7D; refresh_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Z0dWFwaS5pbnRlcm55ZXQuaW4vYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE3OTQ3NTc5NTcsImV4cCI6MTc5NDc3ODExNywibmJmIjoxNzk0NzU3OTU3LCJqdGkiOiJzWjNtWHBlZVBzTE9JMGgyIiwic3ViIjoiMjQ5MDMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwidHlwZSI6InJlZnJlc2gifQ.QaTKMbv28lYpqpLnjtlcT27MiScWeeJiarimcN-12Iw; access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Z0dWFwaS5pbnRlcm55ZXQuaW4vYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE3OTQ3NTc5NTcsImV4cCI6MTc5NDc2MTU1NywibmJmIjoxNzk0NzU3OTU3LCJqdGkiOiJ2a3RFOVFqUFhQQ2xBMHFlIiwic3ViIjoiMjQ5MDMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.v5NrWI21Ljo3GWw1H2_5C7_Xi9FQDr4U3j1tjan0GgI"
+              "value": ""
             }
           ]
         },
