@@ -1,0 +1,202 @@
+{
+  "name": "resume extractor",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "UPLOAD YOUR RESUME",
+        "formDescription": "Please upload your resume to process your role",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Resume",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf, .docx",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Any specialized message to LLM ?",
+              "fieldType": "textarea",
+              "placeholder": "Type your message here"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -112,
+        32
+      ],
+      "id": "65455075-5359-4305-bd77-b276bdcfc419",
+      "name": "On form submission",
+      "webhookId": "19ec4daa-0acf-4ad4-a2b9-1d228534e8bd"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "Resume",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.2,
+      "position": [
+        128,
+        32
+      ],
+      "id": "98151cb7-b79d-40dd-9470-1f0dd6624eca",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "our task is to analyze the provided resume and extract ONLY the candidate's technical skills, work experience depth, and project architecture so this profile can be used to filter and match suitable tech internships. Extract the core functionality and skills from the projects and work experience too of the user in detail.Combine the dedicated Skills section with every library, framework, database, and engineering concept mentioned inside the Work Experience and Projects bullet points.For each project, understand what it does and extract: - Core Functionality (1-sentence summary of what the application/tool actually does): - Applied Tech Stack (all languages, libraries, and APIs used in the project): - Technical Implementation & Complexity. i want the response in an explantation or paragraph way like explaining, this user is experienced in x skills has handled x problem,... in detail"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        480,
+        48
+      ],
+      "id": "3a40fe86-1631-4b4e-bed4-5ed89a4a4c91",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.6-terra",
+          "mode": "list",
+          "cachedResultName": "gpt-5.6-terra"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        592,
+        272
+      ],
+      "id": "81ab562b-e769-47d2-8e63-47da7bfbaa5b",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "adKnv4AUCqpdjUmy",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "zPoal1j6qETu9sty",
+          "mode": "list",
+          "cachedResultName": "candidate_profile",
+          "cachedResultUrl": "/projects/LaIvbjxDtegByxnh/datatables/zPoal1j6qETu9sty"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "extracted_profile": "={{ $json.text }}"
+          },
+          "matchingColumns": [
+            "extracted_profile"
+          ],
+          "schema": [
+            {
+              "id": "extracted_profile",
+              "displayName": "extracted_profile",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        944,
+        64
+      ],
+      "id": "5064d86c-b812-470a-9203-59ca92d2afa4",
+      "name": "Insert row"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "77924362-fc25-467b-a612-ee6ce0ab2b00",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ca349c81bec857f44c755ffa00f9f4a0a66f9a769b13f69268e6797c314244b6"
+  },
+  "nodeGroups": [],
+  "id": "zHArvT3vZXFo8XPi",
+  "tags": []
+}
